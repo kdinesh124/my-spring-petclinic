@@ -24,7 +24,7 @@ spec:
     spec:
       containers:
         - name: catlog-container
-          image: 264786922342.dkr.ecr.ap-south-1.amazonaws.com/prod/images:catlog
+          image: 211535859060.dkr.ecr.ap-south-1.amazonaws.com/prod/images:catlog
           ports:
             - containerPort: 80
           imagePullPolicy: Always  

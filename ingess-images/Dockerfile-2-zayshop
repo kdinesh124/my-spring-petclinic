@@ -1,0 +1,2 @@
+FROM nginx
+ADD templatemo_559_zay_shop /usr/share/nginx/html

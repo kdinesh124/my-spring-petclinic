@@ -1,0 +1,30 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: k8s-catlog
+  namespace: prod
+  annotations: 
+    kubernets.io/change-cause: "Deploy to catlog"
+spec:
+  minReadySeconds: 5
+  replicas: 4
+  selector:
+    matchLabels:
+      app: catlog-app
+  strategy:
+    type: RollingUpdate
+    rollingUpdate:
+      maxSurge: 25%
+      maxUnavailable: 25%
+  template:
+    metadata:
+      name: catlogpods
+      labels:
+        app: catlog-app
+    spec:
+      containers:
+        - name: catlog-container
+          image: 264786922342.dkr.ecr.ap-south-1.amazonaws.com/prod/images:catlog
+          ports:
+            - containerPort: 80
+          imagePullPolicy: Always  

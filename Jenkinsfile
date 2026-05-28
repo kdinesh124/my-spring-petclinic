@@ -18,7 +18,7 @@ pipeline {
                        -Dsonar.projectkey=kdinesh124_my-spring-petclinic \
                        -Dsonar.organization=kdinesh124 \
                        -Dsonar.host.url=https://sonarcloud.io/ \
-                       -Dsonar.login=$sonar"""
+                       -Dsonar.login=$374f29aec2b83f3ec54204de604b45b64c23d38b"""
               }
         }
     }

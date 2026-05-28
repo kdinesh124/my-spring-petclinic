@@ -1,22 +1,21 @@
 pipeline {
-    agent any
-
+    agent { label 'SPC'}
     triggers {
         pollSCM('* * * * *')
     }
-
     stages {
-        stage('Checkout') {
+        stage('git Checkout') {
             steps {
-                git branch: 'main',
-                    url: 'https://github.com/kdinesh124/my-spring-petclinic.git'
+                git url: "https://github.com/kdinesh124/my-spring-petclinic.git",
+                branch: "main"
             }
         }
-
-        stage('Build') {
+        stage('scan') {
             steps {
-                sh 'mvn clean package'
+              withSonarQubeEnv('sonar') {
+                sh "mvn package sonar:sonar"
             }
         }
     }
+}
 }

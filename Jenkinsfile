@@ -1,6 +1,3 @@
-
-
-
 pipeline {
     agent any
 
@@ -16,7 +13,7 @@ pipeline {
         stage('Build & Sonar Scan') {
             steps {
 
-                withCredentials([string(credentialsId: 'sonar-token', variable: 'SONAR_TOKEN')]) {
+                withCredentials([string(credentialsId: 'sonar_id', variable: 'SONAR_TOKEN')]) {
 
                     withSonarQubeEnv('SonarQube') {
 

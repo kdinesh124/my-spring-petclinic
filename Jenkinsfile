@@ -11,8 +11,8 @@ pipeline {
             }
         }
         stage('scan') {
-            steps {
-             withCredentials([string(credentialsId: 'sonar_id', variable: ;SONAR_TOKEN)]) {
+            steps{
+             withCredentials([string(credentialsId: 'sonar_id', variable: 'SONAR_TOKEN')]) {
               withSonarQubeEnv('SONAR') {
                 sh """mvn clear verify sonar:sonar \
                       -Dsonar.projectkey=kdinesh124_my-spring-petclinic \

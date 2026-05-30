@@ -21,7 +21,7 @@ pipeline {
                         mvn clean verify sonar:sonar \
                         -Dsonar.projectKey=myproject \
                         -Dsonar.projectName=myproject \
-                        -Dsonar.host.url=http://172.31.4.90:9000 \
+                        -Dsonar.host.url=https://sonarcloud.io/ \
                         -Dsonar.login=$SONAR_TOKEN
                         '''
                     }

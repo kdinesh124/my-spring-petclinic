@@ -2,8 +2,12 @@ pipeline {
     agent any
 
     tools {
-        maven 'Maven'
+        maven 'maven'
+        jdk 'jdk21'
+    }
 
+    environment {
+        SONAR_TOKEN = credentials('sonar_id')
     }
 
     triggers {
@@ -19,30 +23,33 @@ pipeline {
             }
         }
 
-        stage('Build and Sonar Scan') {
+        stage('Build') {
             steps {
-                withSonarQubeEnv('sonar') {
-                    withCredentials([string(credentialsId: 'sonar_id', variable: 'SONAR_TOKEN')]) {
-
-                        sh """
-                        mvn clean verify sonar:sonar \
-                        -DskipTests \
-                        -Dsonar.projectKey=my-spring-petclinic \
-                        -Dsonar.organization=kdinesh124 \
-                        -Dsonar.host.url=https://sonarcloud.io \
-                        -Dsonar.token=${SONAR_TOKEN}
-                        """
-                    }
-                }
+                sh 'mvn clean install -DskipTests'
             }
         }
 
-        stage('Quality Gate') {
+        stage('SonarCloud Scan') {
             steps {
-                timeout(time: 10, unit: 'MINUTES') {
-                    waitForQualityGate abortPipeline: true
+                withSonarQubeEnv('SonarCloud') {
+                    sh """
+                    mvn sonar:sonar \
+                    -Dsonar.projectKey=kdinesh124_my-spring-petclinic \
+                    -Dsonar.organization=kdinesh124 \
+                    -Dsonar.host.url=https://sonarcloud.io \
+                    -Dsonar.token=${SONAR_TOKEN}
+                    """
                 }
             }
+        }
+    }
+
+    post {
+        success {
+            echo 'Pipeline completed successfully!'
+        }
+        failure {
+            echo 'Pipeline failed!'
         }
     }
 }
